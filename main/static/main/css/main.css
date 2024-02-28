@@ -1,0 +1,63 @@
+body {
+    margin: 0;
+    padding: 0;
+    background: #9cdcfe;
+}
+
+.header {
+    border-bottom: 1px solid #ddd;
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    padding: 20px;
+}
+
+.username-avatar {
+    display: flex;
+    align-items: center;
+    gap: 10px;
+}
+
+.dropdown-menu,
+.dropdown-toggle,
+.dropdown-item,
+.btn-logout {
+    background-color: #007acc;
+    color: #fff;
+    border: none;
+}
+
+.dropdown-toggle:hover,
+.dropdown-item:hover,
+.btn-logout:hover {
+    color: #fff;
+    background-color: #0451a5;
+}
+
+.user-info {
+    padding: 50px;
+    display: flex;
+    align-items: center;
+    gap: 20px
+}
+
+.username-subscriptions {
+    display: flex;
+    align-items: center;
+    gap: 20px
+}
+
+.follower-info {
+    text-align: left;
+}
+
+.post {
+    padding: 15px;
+    margin-bottom: 5px;
+    text-align: center;
+}
+
+.center-container {
+    display: flex;
+    justify-content: center;
+}

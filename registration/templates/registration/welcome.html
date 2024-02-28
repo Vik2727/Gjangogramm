@@ -1,0 +1,23 @@
+{% extends 'main/base.html' %}
+{% load static %}
+
+{% block title %}
+Welcome to DgangoGramm!
+{% endblock %}
+
+{% block body %}
+<div class="container mt-5 text-center">
+    <h1>Welcome to DgangoGramm, {{ username }}!</h1><br>
+    <img src="{% static 'main/img/welcome.jpeg' %}" alt="Django Image"><br><br>
+    <h3>A registration confirmation code has been sent to your email:</h3>
+    <h3>{{ email }}</h3>
+
+    <form action="{% url 'activate_account' %}" method="post">
+        {% csrf_token %}
+        <h3><label for="user_entered_code">Enter the received code here:</label></h3>
+        <h3><input type="number" id="user_entered_code" name="user_entered_code" required></h3><br>
+        <h3><button type="submit">Enter</button></h3>
+    </form>
+
+</div>
+{% endblock %}

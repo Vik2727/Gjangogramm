@@ -1,0 +1,33 @@
+{% extends 'user/base.html' %}
+{% load static %}
+
+{% block title %}
+Posts with tag
+{% endblock %}
+
+{% block body %}
+    <div class="center-container">
+        <h2>Posts with tag: {{ tag }}</h2>
+    </div>
+
+    {% for post in posts %}
+        <div class="post">
+
+            <h4><a href="{% url 'user_profile' user_post_id=post.user.id %}">{{ post.user.username }}</a></h4>
+
+            <h4>{{ post.caption }}</h4>
+
+            <h6 class="image">
+                {% for post_image in post.image.all %}<br>
+                    <img src="{{ post_image.image.url }}" alt="Post image" class="post-image"><br>
+                {% endfor %}
+            </h6>
+        </div>
+    {% endfor %}
+
+    <div class="center-container">
+        <br><h5><a class="btn btn-working btn-sm btn-logout" href="{% url 'user' %}">Back</a></h5><br>
+    </div>
+{% endblock %}
+
+

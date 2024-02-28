@@ -1,0 +1,39 @@
+{% extends 'main/base.html' %}
+{% load static %}
+
+{% block title %}
+Create Post
+{% endblock %}
+
+{% block body %}
+    <div class="container mt-5 text-center">
+        <h3>Create Post</h3><br>
+        <form method="post" enctype="multipart/form-data">
+            {% csrf_token %}
+
+            <h4><label for="id_caption">Caption:</label></h4>
+            <h5>{{ post_form.caption }}</h5><br>
+
+            {% for post_image in post_images %}
+                <img src="{{ post_image.image.url }}" alt="Post image" class="post-image"><br><br>
+            {% endfor %}
+
+            <h4><label for="id_image">Image:</label></h4>
+
+            <h5><input type="file" name="image" multiple id="id_image"></h5><br>
+
+            <h5><button type="submit">Save changes</button></h5><br>
+        </form>
+    </div>
+
+    <div>
+        {% for tag in post.tags.all %}
+            <a href="{% url 'posts_by_tag' tag=tag.name %}">#{{ tag.name }}</a>
+        {% endfor %}
+    </div>
+
+    <div class="center-container">
+        <h4><a class="btn btn-working btn-sm btn-logout" href="{% url 'user' %}">Back</a></h4>
+    </div>
+
+{% endblock %}

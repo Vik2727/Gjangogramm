@@ -1,0 +1,122 @@
+{% extends 'user/base.html' %}
+{% load static %}
+
+{% block title %}
+User Profile
+{% endblock %}
+
+{% block body %}
+    <div class="user-info">
+        {% csrf_token %}
+
+            <div class="user-profile-container">
+                {% if user_data_post.avatar %}
+                    <img src="{{ user_data_post.avatar.url }}" alt="User Avatar" class="user-profile-image"><br>
+                {% else %}
+                    <img src="{% static 'main/img/default_avatar.jpeg' %}" alt="Default avatar" class="user-profile-image"><br>
+                {% endif %}
+            </div>
+
+        <div>
+            <div class="username-subscriptions">
+                <h3>{{ user_data_post.username }}</h3>
+
+                {% if user_data.id != user_data_post.id %}
+                    {% if is_subscribed %}
+                        <button id="subscribeButton" onclick="subscribe_toggle('unsubscribe')">Unsubscribe</button>
+                    {% else %}
+                        <button id="subscribeButton" onclick="subscribe_toggle('subscribe')">Subscribe</button>
+                    {% endif %}
+                {% endif %}<br>
+            </div>
+
+            <div class="username-subscriptions">
+                <h6>{{ user_posts.count }} posts</h6>
+                <h6>{{ user_data_post.subscriptions.all.count }} subscriptions</h6>
+                <h6 id="subscribersCount">{{ user_data_post.subscribers.count }} subscribers</h6>
+            </div>
+
+            <h4>{{ user_data_post.first_name|title }} {{ user_data_post.last_name|title }}</h4>
+            <h5>{{ user_data_post.bio }}</h5>
+        </div>
+    </div><br>
+
+    <div class="tabbable d-flex flex-column align-items-center">
+        <ul class="nav nav-tabs">
+
+            <li class="nav-item">
+                <a class="nav-link active" id="tab1-tab" data-bs-toggle="tab" href="#tab1">Posts</a>
+            </li>
+
+            <li class="nav-item">
+                <a class="nav-link" id="tab2-tab" data-bs-toggle="tab" href="#tab2">Tags</a>
+            </li>
+
+            <li class="nav-item">
+                <a class="nav-link" id="tab3-tab" data-bs-toggle="tab" href="#tab3">Subscriptions</a>
+            </li>
+
+            <li class="nav-item">
+                <a class="nav-link" id="tab4-tab" data-bs-toggle="tab" href="#tab4">Subscribers</a>
+            </li>
+        </ul>
+
+        <div class="tab-content">
+            <div class="tab-pane fade show active" id="tab1">
+                {% for user_post in user_posts %}
+                    <div class="post">
+
+                        <h4>{{ user_post.caption }}</h4>
+
+                        <h6 class="image">
+                            {% for post_image in user_post.image.all %}<br>
+                                <img src="{{ post_image.image.url }}" alt="Post image" class="post-image"><br>
+                            {% endfor %}
+                        </h6>
+
+                        <div class="like-dislike">
+                            <button class="like-button" data-post-id="{{ user_post.id }}" data-action="like">Like</button>
+                            <span id="like-count-{{ user_post.id }}">{{ user_post.likes.count }}</span>
+
+                            <button class="dislike-button" data-post-id="{{ user_post.id }}" data-action="dislike">Dislike</button>
+                            <span id="dislike-count-{{ user_post.id }}">{{ user_post.dislikes.count }}</span>
+                        </div>
+
+                        {% if user.is_authenticated and user.userprofile == user_post.user %}
+                            <a href="{% url 'edit_post' post_id=user_post.id %}">Edit</a>
+                            <a href="{% url 'delete_post' post_id=user_post.id %}">Delete</a>
+                        {% endif %}
+                    </div>
+                {% endfor %}<br>
+            </div>
+
+            <div class="tab-pane fade" id="tab2">
+                {% for tag in unique_tags %}
+                    <br><h5><a href="{% url 'posts_by_tag' tag=tag.name user_post_id=user_data.id %}">#{{ tag.name }}</a></h5>
+                {% endfor %}
+                <br>
+            </div>
+
+            <div class="tab-pane fade" id="tab3">
+                {% for subscription in subscriptions %}
+                    <br><h5><a href="{% url 'user_profile' user_post_id=subscription.id %}">{{ subscription }}</a></h5>
+                {% endfor %}<br>
+            </div>
+
+            <div class="tab-pane fade" id="tab4">
+                {% for subscriber in subscribers %}
+                    <br><h5><a href="{% url 'user_profile' user_post_id=subscriber.id %}">{{ subscriber }}</a></h5>
+                {% endfor %}<br>
+            </div>
+        </div>
+    </div>
+
+    <div class="center-container">
+        <h4><a class="btn btn-working btn-sm btn-logout" href="{% url 'user' %}">Back</a></h4>
+    </div>
+
+    {% block script %}
+        <script src="{% static 'main/js/index.js' %}"></script>
+    {% endblock %}
+
+{% endblock %}

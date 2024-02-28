@@ -1,0 +1,54 @@
+{% load static %}
+<!doctype html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport"
+          content="width=device-width, user-scalable=no, initial-scale=1.0, maximum-scale=1.0, minimum-scale=1.0">
+    <meta http-equiv="X-UA-Compatible" content="ie=edge">
+    <title>{% block title %}{% endblock %}</title>
+    <script src="/dist/vendor.js"></script>
+    <link rel="stylesheet" href="{% static 'main/css/main.css' %}">
+    <link rel="stylesheet" href="{% static 'main/css/img.css' %}">
+    <script src="{% static 'main/js/index.js' %}"></script>
+</head>
+
+<body>
+    <header class="header">
+        {% csrf_token %}
+
+            <h3><a href="{% url 'user' %}">DgangoGramm</a></h3>
+
+        <div class="username-avatar">
+            <h5><a href="{% url 'user_profile' user_post_id=user.id %}">{{ user_data.username }}</a></h5>
+
+            <div class="avatar-container">
+                {% if user_data.avatar %}
+                    <img class="avatar-image" src="{{ user_data.avatar.url }}" alt="User Avatar"><br><br>
+                {% else %}
+                    <img src="{% static 'main/img/default_avatar.jpeg' %}" alt="Default avatar" class="avatar-image"><br><br>
+                {% endif %}
+            </div>
+
+            <button class="btn btn-secondary btn-sm dropdown-toggle" type="button" data-bs-toggle="dropdown" aria-expanded="false">
+                Menu
+            </button>
+
+            <ul class="dropdown-menu">
+                <li><a class="dropdown-item"
+                      href="{% url 'edit_profile' %}">Edit profile</a></li>
+                <li><a class="dropdown-item"
+                       href="{% url 'create_post' %}">Create post</a></li>
+            </ul>
+
+            <a class="btn btn-warning btn-sm btn-logout"
+                   href="{% url 'logout' %}">Logout</a>
+        </div>
+
+    </header>
+
+{% block body %}
+{% endblock %}
+
+</body>
+</html>

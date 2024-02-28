@@ -1,0 +1,21 @@
+{% extends 'main/base.html' %}
+{% load static %}
+
+{% block title %}
+Edit Profile
+{% endblock %}
+
+{% block body %}
+    <div class="container mt-5 text-center">
+        <h4>Edit Profile</h4>
+        <form method="post" enctype="multipart/form-data">
+            {% csrf_token %}
+            {{ form.as_p }}<br>
+            <button type="submit">Save changes</button>
+        </form>
+    </div><br>
+
+    <div class="center-container">
+        <h5><a class="btn btn-working btn-sm btn-logout" href="{% url 'user' %}">Back</a></h5>
+    </div>
+{% endblock %}

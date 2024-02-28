@@ -1,0 +1,14 @@
+{% extends 'main/base.html' %}
+{% load static %}
+
+{% block title %}
+Error create post
+{% endblock %}
+
+{% block body %}
+<div class="container mt-5 text-center">
+    <h1>{{ error_message }}</h1><br>
+    <img src="{% static 'main/img/error.jpeg' %}" alt="Error Image"><br><br>
+    <br><h5><a class="btn btn-working btn-sm btn-logout" href="{% url 'user' %}">One more</a></h5><br>
+</div>
+{% endblock %}

@@ -1,0 +1,59 @@
+{% extends 'main/base.html' %}
+{% load static %}
+
+{% block title %}
+Registration
+{% endblock %}
+
+{% block body %}
+<div class="container mt-5 text-center">
+
+<h3>Registration</h3>
+
+<div class="form-container">
+  <form method="post" action="{% url 'registration' %}">
+    {% csrf_token %}
+
+    <div class="form-group">
+      <label for="{{ form.username.id_for_label }}">Username:</label><br>
+      {{ form.username }}
+    </div>
+
+    <div class="form-group">
+      <label for="{{ form.first_name.id_for_label }}">First Name:</label><br>
+      {{ form.first_name }}
+    </div>
+
+    <div class="form-group">
+      <label for="{{ form.last_name.id_for_label }}">Last Name:</label><br>
+      {{ form.last_name }}
+    </div>
+
+    <div class="form-group">
+      <label for="{{ form.email.id_for_label }}">Email:</label><br>
+      {{ form.email }}
+    </div>
+
+    <div class="form-group">
+      <label for="{{ form.password1.id_for_label }}">Password:</label><br>
+      {{ form.password1 }}<br>
+      <br><h6>- The password must contain at least 12 characters.</h6>
+      <h6>- Password must contain at least one number.</h6>
+      <h6>- Password must contain at least one capital letter.</h6>
+      <h6>- Password must contain at least one special character: !@#$%^&*(),.?":{}|<>_</h6>
+    </div>
+
+    <div class="form-group">
+      <label for="{{ form.password2.id_for_label }}">Confirm Password:</label><br>
+      {{ form.password2 }}
+    </div>
+
+    <br><button type="submit">Register</button><br>
+    <br><h5><a class="btn btn-working btn-sm btn-logout" href="/">Back</a></h5>
+
+  </form>
+
+</div>
+
+</div>
+{% endblock %}

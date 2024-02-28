@@ -1,0 +1,30 @@
+{% load static %}
+<!doctype html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport"
+          content="width=device-width, user-scalable=no, initial-scale=1.0, maximum-scale=1.0, minimum-scale=1.0">
+    <meta http-equiv="X-UA-Compatible" content="ie=edge">
+    <title>{% block title %}{% endblock %}</title>
+    <script src="/dist/vendor.js"></script>
+    <link rel="stylesheet" href="{% static 'main/css/main.css' %}">
+    <link rel="stylesheet" href="{% static 'main/css/img.css' %}">
+    <script src="{% static 'main/js/index.js' %}"></script>
+</head>
+
+<body>
+    <header class="header">
+        {% csrf_token %}
+        <h3><a>DgangoGramm</a></h3>
+        <div class="username-avatar">
+            <h1><a class="btn btn-working btn-sm btn-logout" href="/registration/">Sign up</a></h1>
+            <h1><a class="btn btn-working btn-sm btn-logout" href="/login/">Login</a></h1>
+            <h1><a class="btn btn-working btn-sm btn-logout" href="{% url 'social:begin' 'github' %}">Login with GitHub</a></h1>
+{#            <h1><a class="btn btn-working btn-sm btn-logout" href="{% url 'social:begin' 'google-oauth2' %}">Login with Google</a></h1>#}
+        </div>
+    </header>
+{% block body %}
+{% endblock %}
+</body>
+</html>

@@ -1,0 +1,50 @@
+{% extends 'user/base.html' %}
+{% load static %}
+
+{% block title %}
+User
+{% endblock %}
+
+{% block body %}
+
+    {% for post in posts %}
+        <div class="post">
+
+            <h4><a href="{% url 'user_profile' user_post_id=post.user.id %}">{{ post.user.username }}</a></h4>
+
+            <h4>{{ post.caption }}</h4>
+
+            <h4 class="tags">
+                {% for tag in post.tags.all %}
+                    <a href="{% url 'posts_by_tag' tag=tag.name user_post_id=post.user.id %}">#{{ tag.name }}</a>
+                {% endfor %}
+            </h4>
+
+            <h6 class="image">
+                {% for post_image in post.image.all %}<br>
+                    <img src="{{ post_image.image.url }}" alt="Post image" class="post-image"><br>
+                {% endfor %}
+            </h6>
+
+            <div class="like-dislike">
+                <button class="like-button" data-post-id="{{ post.id }}" data-action="like">Like</button>
+                <span id="like-count-{{ post.id }}">{{ post.likes.count }}</span>
+
+                <button class="dislike-button" data-post-id="{{ post.id }}" data-action="dislike">Dislike</button>
+                <span id="dislike-count-{{ post.id }}">{{ post.dislikes.count }}</span>
+            </div>
+
+            <div class="edit-delete">
+                {% if user.is_authenticated and user.userprofile == post.user %}
+                    <a href="{% url 'edit_post' post_id=post.id %}">Edit</a>
+                    <a href="{% url 'delete_post' post_id=post.id %}">Delete</a>
+                {% endif %}
+            </div>
+        </div>
+    {% endfor %}
+
+    {% block script %}
+        <script src="{% static 'main/js/index.js' %}"></script>
+    {% endblock %}
+
+{% endblock %}

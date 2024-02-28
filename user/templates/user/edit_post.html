@@ -1,0 +1,28 @@
+{% extends 'main/base.html' %}
+{% load static %}
+
+{% block title %}
+Edit Post
+{% endblock %}
+
+{% block body %}
+    <div class="container mt-5 text-center">
+        <h3>Edit Post</h3><br>
+        <form method="post" enctype="multipart/form-data">
+            {% csrf_token %}
+
+            <h4><label for="id_caption">Caption:</label></h4>
+            <h5>{{ post_form.caption }}</h5><br>
+
+            <h4><label for="id_image">Image:</label></h4>
+            <h5><input type="file" name="image" multiple id="id_image"></h5><br>
+
+            <h4><button type="submit">Save changes</button></h4><br>
+        </form>
+    </div>
+
+    <div class="center-container">
+        <h4><a class="btn btn-working btn-sm btn-logout" href="{% url 'user' %}">Back</a></h4>
+    </div>
+
+{% endblock %}
